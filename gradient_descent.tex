@@ -1,0 +1,75 @@
+\documentclass{article}
+\usepackage{color}
+\usepackage[procnames]{listings}
+\usepackage{algorithm}
+\begin{document}
+\definecolor{keywords}{RGB}{255,0,90}
+\definecolor{comments}{RGB}{0,0,113}
+\definecolor{red}{RGB}{160,0,0}
+\definecolor{green}{RGB}{0,150,0}
+\lstset{language=Python,
+        basicstyle=\ttfamily\small,
+        keywordstyle=\color{keywords},
+        commentstyle=\color{comments},
+        stringstyle=\color{red},
+        showstringspaces=false,
+        identifierstyle=\color{green},
+        procnamekeys={def,class}}
+
+\section{The Structure of the Algorithm}
+
+Gradient descent is a basic method for minimization. It optimizes a function $f$
+by taking small steps in the direction of the first derivative. \\
+\\
+We can write each iteration as follows:\\
+$x_{i+1} = x_i - \gamma \nabla f(x_i) $ \\
+This corresponds to the following python function call:
+\begin{algorithm}\caption{Single gradient descent step}\begin{lstlisting}
+def gradient_descent_step(f_grad, x, learning_rate):
+    return x - learning_rate * f_grad(x)
+\end{lstlisting}\end{algorithm}
+\begin{algorithm}\caption{AbstractGradientDescent class}\begin{lstlisting}
+class AbstractGradientDescent(object):
+    def minimize_function(self, initial_x, f_grad, iterations):
+        x = initial_x
+        for i in range(iterations):
+            learning_rate = self._get_learning_rate(i)
+            x = self._gradient_descent(f_grad, x, learning_rate)
+        return x
+
+    def _gradient_descent_step(self, f_grad, x, learning_rate):
+        return x - learning_rate * f_grad(x)
+
+    def _get_learning_rate(self, i):
+        raise NotImplementedError
+\end{lstlisting}\end{algorithm}
+\section{The idea behind the method}
+
+\section{Step size selection}
+
+\section{Trivial example: quadratic function}
+
+\section{Machine Learning example: Ordinary Least Squares}
+
+\section*{Appendix: Gradient Descent code}
+
+The following is the final code listing of all the classes we've constructed.
+These classes are contained in the final\, tangled module\, gradient\_descent\.py. \\
+
+\begin{algorithm}\caption{gradient\_descent.py}\begin{lstlisting}
+class AbstractGradientDescent(object):
+    def minimize_function(self, initial_x, f_grad, iterations):
+        x = initial_x
+        for i in range(iterations):
+            learning_rate = self._get_learning_rate(i)
+            x = self._gradient_descent(f_grad, x, learning_rate)
+        return x
+
+    def _gradient_descent_step(self, f_grad, x, learning_rate):
+        return x - learning_rate * f_grad(x)
+
+    def _get_learning_rate(self, i):
+        raise NotImplementedError
+\end{lstlisting}\end{algorithm}
+
+\end{document}
