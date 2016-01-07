@@ -1,0 +1,51 @@
+\documentclass{article}
+\begin{document}
+
+\section{The Structure of the Algorithm}
+
+Gradient descent is a basic method for minimization. It optimizes a function $f$
+by taking small steps in the direction of the first derivative. \\
+\\
+We can write each iteration as follows:\\
+$x_{i+1} = x_i - \gamma \nabla f(x_i) $ \\
+This corresponds to the following python function call:
+<<Single gradient descent step>>=
+def gradient_descent_step(f_grad, x, learning_rate):
+    return x - learning_rate * f_grad(x)
+@
+
+<<AbstractGradientDescent class>>=
+class AbstractGradientDescent(object):
+    def minimize_function(self, initial_x, f_grad, iterations):
+        x = initial_x
+        for i in range(iterations):
+            learning_rate = self._get_learning_rate(i)
+            x = self._gradient_descent(f_grad, x, learning_rate)
+        return x
+
+    def _gradient_descent_step(self, f_grad, x, learning_rate):
+        return x - learning_rate * f_grad(x)
+
+    def _get_learning_rate(self, i):
+        raise NotImplementedError
+@
+
+\section{The idea behind the method}
+
+\section{Step size selection}
+
+\section{Trivial example: quadratic function}
+
+\section{Machine Learning example: Ordinary Least Squares}
+
+\section*{Appendix: Gradient Descent code}
+
+The following is the final code listing of all the classes we've constructed.
+These classes are contained in the final\, tangled module\, gradient\_descent\.py. \\
+
+<<gradient_descent.py>>=
+<<AbstractGradientDescent class>>
+@
+
+
+\end{document}
