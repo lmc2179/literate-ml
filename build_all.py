@@ -1,5 +1,7 @@
 from literate_python.tools import Document, Tangler, Weaver
-from os import scandir
+from os import scandir, unlink
+import subprocess
+import shlex
 
 for filename in scandir():
     if filename.name.endswith('.pyl'):
@@ -12,3 +14,7 @@ for filename in scandir():
                                 python_filename)
         Weaver().weave_module(filename.name,
                               latex_filename)
+        proc=subprocess.Popen(shlex.split('pdflatex {0}'.format(latex_filename)))
+        proc.communicate()
+        unlink('{0}.aux'.format(stem))
+        unlink('{0}.log'.format(stem))
